@@ -40,17 +40,7 @@ body {
 }
 
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.25;
-  background-image:
-    linear-gradient(rgba(16, 33, 31, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 33, 31, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: linear-gradient(to bottom, #000 0%, transparent 78%);
+  display: none;
 }
 
 a {
