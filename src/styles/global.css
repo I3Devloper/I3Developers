@@ -1,17 +1,17 @@
 :root {
-  --ink: #10211f;
-  --ink-2: #243b37;
-  --paper: #f6efe3;
-  --paper-deep: #eadcc7;
-  --moss: #24586B;
-  --cypress: #4D7D92;
-  --bayou: #004F62;
-  --marigold: #84B026;
-  --crawfish: #d9572b;
-  --sage: #A3C0CD;
-  --white: #fffdf9;
-  --line: rgba(16, 33, 31, 0.16);
-  --shadow: 0 24px 80px rgba(16, 33, 31, 0.16);
+  --ink: #0F2027;
+  --ink-2: #1e3a47;
+  --paper: #F0F7F8;
+  --paper-deep: #dceef2;
+  --moss: #0D7377;
+  --cypress: #1A6B8A;
+  --bayou: #0a5c60;
+  --marigold: #0D7377;
+  --crawfish: #1A6B8A;
+  --sage: #A8C8D8;
+  --white: #ffffff;
+  --line: rgba(15, 32, 39, 0.14);
+  --shadow: 0 24px 80px rgba(15, 32, 39, 0.14);
   --radius: 28px;
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
@@ -31,9 +31,10 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   background:
-    radial-gradient(circle at 16% 12%, rgba(231, 168, 59, 0.18), transparent 28rem),
-    radial-gradient(circle at 88% 4%, rgba(49, 95, 83, 0.18), transparent 30rem),
-    linear-gradient(135deg, var(--paper), #fff8eb 54%, var(--paper-deep));
+    radial-gradient(circle at 16% 12%, rgba(13, 115, 119, 0.1), transparent 28rem),
+    radial-gradient(circle at 88% 4%, rgba(26, 107, 138, 0.1), transparent 30rem),
+    linear-gradient(135deg, var(--paper), #e8f4f8 54%, var(--paper-deep));
+  background-attachment: fixed;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
 }
@@ -82,7 +83,7 @@ img {
   content: "";
   width: 28px;
   height: 2px;
-  background: var(--crawfish);
+  background: var(--moss);
 }
 
 h1,
@@ -130,11 +131,11 @@ p {
   justify-content: center;
   min-height: 52px;
   padding: 0.9rem 1.2rem;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--moss);
   border-radius: 999px;
   color: var(--white);
-  background: var(--ink);
-  box-shadow: 0 14px 34px rgba(16, 33, 31, 0.16);
+  background: var(--moss);
+  box-shadow: 0 14px 34px rgba(13, 115, 119, 0.22);
   font-weight: 800;
   text-decoration: none;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
@@ -143,21 +144,22 @@ p {
 .button:hover,
 .button:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 18px 42px rgba(16, 33, 31, 0.2);
+  box-shadow: 0 18px 42px rgba(13, 115, 119, 0.3);
   background: var(--bayou);
+  border-color: var(--bayou);
 }
 
 .button.secondary {
-  color: var(--ink);
+  color: var(--moss);
   background: transparent;
-  border-color: rgba(16, 33, 31, 0.4);
+  border-color: var(--moss);
   box-shadow: none;
 }
 
 .button.secondary:hover,
 .button.secondary:focus-visible {
-  background: var(--ink);
-  border-color: var(--ink);
+  background: var(--moss);
+  border-color: var(--moss);
   color: var(--white);
 }
 
@@ -176,8 +178,8 @@ p {
 .card {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 250, 240, 0.74);
-  box-shadow: 0 12px 44px rgba(16, 33, 31, 0.08);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 12px 44px rgba(15, 32, 39, 0.07);
   backdrop-filter: blur(14px);
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
