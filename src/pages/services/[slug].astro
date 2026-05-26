@@ -14,6 +14,20 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+
+// Map each service to its matching image filename
+const imageMap: Record<string, string> = {
+  "lafayette-website-development-web-design":          "/images/webdesign.png",
+  "search-engine-marketing-seo-services-lafayette-la": "/images/seo.jpg",
+  "best-marketing-agency-services-lafayette":          "/images/networking.png",
+  "social-media-marketing-in-lafayette-la":            "/images/Social.jpg",
+  "ecommerce-development-lafayette-la":                "/images/ecommerce.jpg",
+  "lafayette-custom-app-development":                  "/images/appDevelopment.jpg",
+  "lafayette-custom-software-development":             "/images/Custom.jpg",
+  "lafayette-branding-and-print":                      "/images/brand.png",
+};
+
+const bgImage = imageMap[service.slug];
 ---
 
 <BaseLayout
@@ -34,6 +48,7 @@ const { service } = Astro.props;
     eyebrow={service.eyebrow}
     title={service.title}
     lead={service.hero}
+    bgImage={bgImage}
     primary={{ label: "Request a consultation", href: "/contact/" }}
     secondary={{ label: "View all services", href: "/services/" }}
   />

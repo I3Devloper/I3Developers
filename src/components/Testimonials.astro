@@ -6,7 +6,7 @@ const liveData = await getGoogleReviews();
 const { rating, total, reviews } = mergeReviews(liveData);
 
 const displayRating = rating.toFixed(1);
-const reviewLabel = total ? `${total}+ Google Reviews` : "Based on Google Reviews";
+const reviewLabel = total ? `${total}+ Google Reviews` : "25+ Google Reviews";
 ---
 
 <section class="testimonials-section">
@@ -33,27 +33,29 @@ const reviewLabel = total ? `${total}+ Google Reviews` : "Based on Google Review
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="testimonials-grid">
-      {reviews.map((t) => (
-        <article class="card testimonial-card">
-          <div class="card-header">
-            <span class="stars-rating">{"★".repeat(t.rating ?? 5)}</span>
+  <!-- Full-width marquee — outside container so it bleeds edge to edge -->
+  <div class="marquee-wrap" aria-label="Customer reviews">
+    <div class="marquee-track">
+      {/* Render twice for seamless infinite loop */}
+      {[...reviews, ...reviews].map((t, i) => (
+        <article class="review-card" aria-hidden={i >= reviews.length ? "true" : "false"}>
+          <div class="review-top">
+            <span class="stars-rating" aria-label={`${t.rating ?? 5} stars`}>{"★".repeat(t.rating ?? 5)}</span>
             <span class="source-tag">{t.source}</span>
           </div>
-          <blockquote class="quote-text">
-            "{t.quote}"
-          </blockquote>
-          <div class="author-info">
-            <div class="author-meta">
-              <strong>{t.author}</strong>
-              <small>{("relativeTime" in t && t.relativeTime) ? t.relativeTime : t.title}</small>
-            </div>
-          </div>
+          <blockquote>"{t.quote}"</blockquote>
+          <footer>
+            <strong>{t.author}</strong>
+            <small>{("date" in t && t.date) ? t.date : t.title}</small>
+          </footer>
         </article>
       ))}
     </div>
+  </div>
 
+  <div class="container">
     <div class="testimonials-cta">
       <p>Happy with our partnership?</p>
       <div class="cta-row">
@@ -87,7 +89,7 @@ const reviewLabel = total ? `${total}+ Google Reviews` : "Based on Google Review
 <style>
   .testimonials-section {
     padding: clamp(4rem, 8vw, 7.5rem) 0;
-    background: linear-gradient(180deg, var(--white) 0%, rgba(246, 239, 227, 0.45) 100%);
+    background: linear-gradient(180deg, var(--white) 0%, rgba(220, 238, 242, 0.5) 100%);
   }
 
   .testimonials-header {
@@ -95,13 +97,10 @@ const reviewLabel = total ? `${total}+ Google Reviews` : "Based on Google Review
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
-    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
 
-  .testimonials-header h2 {
-    max-width: 620px;
-    margin-top: 0.6rem;
-  }
+  .testimonials-header h2 { max-width: 620px; margin-top: 0.6rem; }
 
   .google-badge-card {
     display: flex;
@@ -111,197 +110,112 @@ const reviewLabel = total ? `${total}+ Google Reviews` : "Based on Google Review
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(16, 33, 31, 0.04);
+    box-shadow: 0 10px 30px rgba(16,33,31,0.04);
+    flex-shrink: 0;
   }
 
-  .google-logo {
+  .google-logo { display: flex; flex-direction: column; align-items: center; gap: 0.28rem; }
+  .badge-title { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(16,33,31,0.6); }
+  .badge-rating { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; border-left: 1px solid var(--line); padding-left: 1.2rem; }
+  .badge-rating strong { font-size: 1.6rem; line-height: 1; color: var(--ink); }
+  .badge-rating .stars { color: var(--moss); font-size: 1rem; letter-spacing: 0.05em; }
+  .badge-rating small { font-size: 0.72rem; font-weight: 700; color: rgba(16,33,31,0.5); }
+
+  /* ── Infinite marquee ─────────────────────────────────────── */
+  .marquee-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 0 3rem;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1.25rem;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .review-card {
+    flex: 0 0 340px;
+    width: 340px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.28rem;
-  }
-
-  .badge-title {
-    font-size: 0.68rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgba(16, 33, 31, 0.6);
-  }
-
-  .badge-rating {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.1rem;
-    border-left: 1px solid var(--line);
-    padding-left: 1.2rem;
-  }
-
-  .badge-rating strong {
-    font-size: 1.6rem;
-    line-height: 1;
-    color: var(--ink);
-  }
-
-  .badge-rating .stars {
-    color: var(--marigold);
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-  }
-
-  .badge-rating small {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: rgba(16, 33, 31, 0.5);
-  }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
-  }
-
-  .testimonial-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: clamp(1.5rem, 3vw, 2.6rem);
+    gap: 1rem;
+    padding: 1.5rem;
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: 24px;
-    box-shadow: 0 12px 34px rgba(16, 33, 31, 0.02);
-    transition: transform 180ms ease, box-shadow 180ms ease;
+    box-shadow: 0 8px 28px rgba(16,33,31,0.05);
   }
 
-  .testimonial-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(16, 33, 31, 0.05);
-  }
+  .review-top { display: flex; justify-content: space-between; align-items: center; }
 
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .stars-rating {
-    color: var(--marigold);
-    font-size: 1.1rem;
-    letter-spacing: 0.06em;
-  }
+  .stars-rating { color: #f5c842; font-size: 1rem; letter-spacing: 0.06em; }
 
   .source-tag {
-    font-size: 0.72rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--cypress);
-    background: rgba(49, 95, 83, 0.08);
-    padding: 0.28rem 0.6rem;
-    border-radius: 99px;
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--cypress); background: rgba(13,115,119,0.08); padding: 0.25rem 0.55rem; border-radius: 99px;
   }
 
-  .quote-text {
-    font-family: var(--font-serif, 'Fraunces', serif);
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-    line-height: 1.5;
+  .review-card blockquote {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.55;
     font-weight: 600;
     color: var(--ink);
     margin: 0;
+    flex: 1;
+    /* clamp to 5 lines so cards stay uniform height */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  .author-info {
+  .review-card footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
     border-top: 1px solid var(--line);
-    padding-top: 1.1rem;
+    padding-top: 0.9rem;
   }
 
-  .author-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.12rem;
-  }
+  .review-card footer strong { font-size: 0.92rem; font-weight: 800; color: var(--ink); }
+  .review-card footer small  { font-size: 0.8rem; color: rgba(16,33,31,0.5); font-weight: 700; }
 
-  .author-meta strong {
-    font-size: 0.94rem;
-    font-weight: 800;
-    color: var(--ink);
-  }
+  /* CTA row */
+  .testimonials-cta { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; text-align: center; }
+  .testimonials-cta p { font-weight: 800; color: rgba(16,33,31,0.68); }
 
-  .author-meta small {
-    font-size: 0.82rem;
-    color: rgba(16, 33, 31, 0.62);
-    font-weight: 700;
-  }
+  .cta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
 
-  .testimonials-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    text-align: center;
-  }
+  .google-review-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--ink); color: var(--white); box-shadow: 0 12px 28px rgba(16,33,31,0.16); }
+  .google-review-btn:hover { background: var(--bayou); }
 
-  .testimonials-cta p {
-    font-weight: 800;
-    color: rgba(16, 33, 31, 0.68);
-  }
-
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-
-  .google-review-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--ink);
-    color: var(--white);
-    box-shadow: 0 12px 28px rgba(16, 33, 31, 0.16);
-  }
-
-  .google-review-btn:hover {
-    background: var(--bayou);
-  }
-
-  .social-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .facebook-btn {
-    background: #1877f2;
-    color: #fff;
-  }
-
-  .facebook-btn:hover {
-    background: #166fe5;
-  }
-
-  .instagram-btn {
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: #fff;
-  }
-
-  .instagram-btn:hover {
-    opacity: 0.9;
-  }
+  .social-btn { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .facebook-btn  { background: #1877f2; color: #fff; border-color: #1877f2; }
+  .facebook-btn:hover  { background: #166fe5; border-color: #166fe5; }
+  .instagram-btn { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; border-color: transparent; }
+  .instagram-btn:hover { opacity: 0.9; }
 
   @media (max-width: 860px) {
-    .testimonials-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
+    .testimonials-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  }
 
-    .testimonials-grid {
-      grid-template-columns: 1fr;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
   }
 </style>

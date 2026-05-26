@@ -3,6 +3,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import CTA from "@/components/CTA.astro";
 import { getCollection, render } from "astro:content";
 import { breadcrumbSchema, articleSchema } from "@/lib/seo";
+import { services } from "@/data/services";
+import { site } from "@/data/site";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -15,6 +17,99 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const slug = post.id.replace(/\.md$/, "");
 const { Content } = await render(post);
+
+// Pick 3 related services based on the post tag
+const tagServiceMap: Record<string, string[]> = {
+  "Web Design":      ["lafayette-website-development-web-design", "search-engine-marketing-seo-services-lafayette-la", "best-marketing-agency-services-lafayette"],
+  "SEO":             ["search-engine-marketing-seo-services-lafayette-la", "lafayette-website-development-web-design", "best-marketing-agency-services-lafayette"],
+  "Marketing":       ["best-marketing-agency-services-lafayette", "social-media-marketing-in-lafayette-la", "search-engine-marketing-seo-services-lafayette-la"],
+  "Social Media":    ["social-media-marketing-in-lafayette-la", "best-marketing-agency-services-lafayette", "search-engine-marketing-seo-services-lafayette-la"],
+  "Ecommerce":       ["ecommerce-development-lafayette-la", "lafayette-website-development-web-design", "search-engine-marketing-seo-services-lafayette-la"],
+  "App Development": ["lafayette-custom-app-development", "lafayette-custom-software-development", "lafayette-website-development-web-design"],
+  "Branding":        ["lafayette-branding-and-print", "best-marketing-agency-services-lafayette", "lafayette-website-development-web-design"],
+  "Software":        ["lafayette-custom-software-development", "lafayette-custom-app-development", "lafayette-website-development-web-design"],
+};
+
+const relatedSlugs = tagServiceMap[post.data.tag] ?? tagServiceMap["Web Design"];
+const relatedServices = relatedSlugs.map(s => services.find(svc => svc.slug === s)).filter(Boolean);
+---
+
+<BaseLayout
+  title={post.data.metaTitle}
+  description={post.data.description}
+  canonical={`/blog/${slug}/`}
+  ogImage={post.data.coverImage ?? site.defaultOgImage}
+  schema={[
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Blog", url: "/blog/" },
+      { name: post.data.title, url: `/blog/${slug}/` }
+    ]),
+    articleSchema(
+      post.data.title,
+      post.data.description,
+      `https://i3developers.com/blog/${slug}/`,
+      post.data.publishedDate.toISOString().split("T")[0],
+      post.data.modifiedDate.toISOString().split("T")[0],
+      post.data.author,
+      "https://i3developers.com/about-us-best-website-design-website-development-seo-marketing-agency-in-lafayette-la/"
+    )
+  ]}
+  publishedDate={post.data.publishedDate.toISOString().split("T")[0]}
+  modifiedDate={post.data.modifiedDate.toISOString().split("T")[0]}
+>
+  <article class="article-page">
+    <div class="container article-container">
+      <header class="article-header">
+        <a href="/blog/" class="article-back">&larr; Back to Blog</a>
+        <span class="article-tag">{post.data.tag}</span>
+        <h1>{post.data.title}</h1>
+        <p class="article-excerpt">{post.data.excerpt}</p>
+        <div class="article-meta">
+          <span>By {post.data.author}</span>
+          <span>{post.data.publishedDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+        </div>
+      </header>
+
+      {post.data.coverImage && (
+        <div class="article-cover">
+          <img src={post.data.coverImage} alt={post.data.title} loading="eager" />
+        </div>
+      )}
+
+      <div class="article-body">
+        <Content />
+      </div>
+
+      {/* Related services — internal linking */}
+      <aside class="related-services">
+        <p class="eyebrow">Related services</p>
+        <h2>Ready to take the next step?</h2>
+        <div class="related-grid">
+          {relatedServices.map((svc) => svc && (
+            <a href={`/services/${svc.slug}/`} class="related-card">
+              <strong>{svc.shortTitle}</strong>
+              <span>{svc.eyebrow}</span>
+              <span class="related-link">Learn more →</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+
+      <div class="article-footer">
+        <div class="article-author-card">
+          <div>
+            <p class="author-name">{post.data.author}</p>
+            <p class="author-role">{post.data.authorRole} at i3Developers · Lafayette, LA</p>
+          </div>
+          <a href="/contact/" class="button">Work with us</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <CTA />
+</BaseLayout>
 ---
 
 <BaseLayout
@@ -187,10 +282,77 @@ const { Content } = await render(post);
     margin: 0.2rem 0 0;
   }
 
+  .article-cover {
+    margin-bottom: 2.5rem;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .article-cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 480px;
+    object-fit: cover;
+  }
+
+  /* Related services */
+  .related-services {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .related-services h2 {
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .related-card {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .related-card:hover {
+    border-color: var(--moss);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(13,115,119,0.1);
+  }
+
+  .related-card strong {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  .related-card span {
+    font-size: 0.82rem;
+    color: rgba(15,32,39,0.58);
+    font-weight: 600;
+  }
+
+  .related-link {
+    color: var(--moss) !important;
+    font-weight: 800 !important;
+    font-size: 0.82rem !important;
+    margin-top: 0.3rem;
+  }
+
   @media (max-width: 600px) {
-    .article-author-card {
-      flex-direction: column;
-      text-align: center;
-    }
+    .related-grid { grid-template-columns: 1fr; }
+    .article-author-card { flex-direction: column; text-align: center; }
   }
 </style>
