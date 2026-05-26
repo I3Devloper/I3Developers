@@ -15,7 +15,9 @@ const blogCollection = defineCollection({
     authorRole: z.string(),
     publishedDate: z.coerce.date(),
     modifiedDate: z.coerce.date(),
-    keywords: z.array(z.string()).default([])
+    keywords: z.union([z.array(z.string()), z.string()]).default([]).transform(v =>
+      typeof v === "string" ? v.split(",").map(s => s.trim()).filter(Boolean) : v
+    )
   })
 });
 
