@@ -1,0 +1,37 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import CTA from "@/components/CTA.astro";
+import { services } from "@/data/services";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "Services - i3Developers - Lafayette Web Design, Development, SEO & Marketing Agency";
+const description =
+  "Offering E-commerce and Custom Development, SEO, Branding and Printing, Social Media Marketing, Website & App Development in Lafayette.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/services/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Services", url: "/services/" }])]}
+>
+  <Hero
+    eyebrow="Services"
+    title="Digital services built around local business outcomes."
+    lead="From web design and SEO to apps, ecommerce, branding, and custom software, every service connects back to visibility, trust, and measurable action."
+    primary={{ label: "Start with SEO", href: "/services/search-engine-marketing-seo-services-lafayette-la/" }}
+    secondary={{ label: "Plan a project", href: "/contact/" }}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid two">
+        {services.map((service, index) => <ServiceCard service={service} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>

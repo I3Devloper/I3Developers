@@ -1,0 +1,326 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { site } from "@/data/site";
+import { schedulePage } from "@/data/schedule";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo";
+
+const { title, description, eyebrow, heading, lead, steps, faqs } = schedulePage;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/schedule/"
+  schema={[
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Schedule", url: "/schedule/" }
+    ]),
+    faqSchema(faqs)
+  ]}
+>
+  <Hero
+    eyebrow={eyebrow}
+    title={heading}
+    lead={lead}
+    primary={{ label: `Call ${site.phone}`, href: site.phoneHref }}
+    secondary={{ label: "View services", href: "/services/" }}
+  />
+
+  <section class="section">
+    <div class="container">
+      {
+        site.scheduleLink ? (
+          <div class="schedule-card">
+            <div
+              class="calendly-inline-widget"
+              data-url={site.scheduleLink}
+              style="position: relative;min-width:320px;height:700px;"
+            ></div>
+          </div>
+        ) : (
+          <div class="schedule-card schedule-placeholder">
+            <p class="eyebrow">Calendar setup required</p>
+            <h2>Connect your Calendly account.</h2>
+            <p class="lead">
+              Create a free <a href="https://calendly.com/signup" target="_blank" rel="noopener">Calendly account</a>,
+              set up a 30-minute event type, and paste the link into
+              <code>src/data/site.ts</code> under <code>scheduleLink</code>.
+              The booking calendar will appear here automatically once the link is added.
+            </p>
+            <p class="help-text">
+              Example: <code>https://calendly.com/i3developers/30min</code>
+            </p>
+            <div class="button-row">
+              <a class="button" href={site.phoneHref}>Call {site.phone}</a>
+              <a class="button secondary" href="/contact/">Contact page</a>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">How it works</p>
+        <h2>A simple three-step process.</h2>
+      </div>
+      <div class="steps-grid">
+        {steps.map((step, i) => (
+          <article class="card step-card animate-in" style={`animation-delay: ${i * 90}ms`}>
+            <span class="step-num" aria-hidden="true">0{i + 1}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Common questions</p>
+        <h2>What to expect from the call.</h2>
+      </div>
+      <div class="faq-grid">
+        {faqs.map((faq, i) => (
+          <details class="faq-item animate-in" style={`animation-delay: ${i * 80}ms`}>
+            <summary>
+              <span>{faq.question}</span>
+              <span class="plus-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+{
+  site.scheduleLink && (
+    <script
+      is:inline
+      src="https://assets.calendly.com/assets/external/widget.js"
+    ></script>
+  )
+}
+
+<style>
+  .schedule-card {
+    border: 1px solid var(--line, rgba(16, 33, 31, 0.14));
+    border-radius: var(--radius, 28px);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 18px 60px rgba(16, 33, 31, 0.08);
+  }
+
+  .schedule-placeholder {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(132, 176, 38, 0.08), transparent 20rem),
+      var(--white);
+  }
+
+  .schedule-placeholder h2 {
+    max-width: 580px;
+    margin: 0 auto;
+    color: var(--ink);
+  }
+
+  .schedule-placeholder .lead {
+    max-width: 680px;
+    margin: 0 auto;
+    color: rgba(16, 33, 31, 0.72);
+  }
+
+  .schedule-placeholder .lead a {
+    color: var(--bayou);
+    font-weight: 700;
+  }
+
+  .schedule-placeholder .eyebrow {
+    color: var(--crawfish);
+  }
+
+  .help-text {
+    color: rgba(16, 33, 31, 0.55);
+    font-size: 0.88rem;
+  }
+
+  .help-text code {
+    padding: 0.15rem 0.45rem;
+    border: 1px solid rgba(16, 33, 31, 0.14);
+    border-radius: 6px;
+    background: rgba(16, 33, 31, 0.04);
+    font-size: 0.84rem;
+    word-break: break-all;
+  }
+
+  .schedule-placeholder .button-row {
+    justify-content: center;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .step-card {
+    display: grid;
+    gap: 0.7rem;
+    padding: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--marigold);
+    letter-spacing: -0.04em;
+  }
+
+  .step-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .step-card p {
+    color: rgba(16, 33, 31, 0.68);
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .faq-grid {
+    display: grid;
+    gap: 0.6rem;
+    max-width: 860px;
+  }
+
+  .faq-item {
+    border: 1px solid var(--line, rgba(16, 33, 31, 0.12));
+    border-radius: 18px;
+    background: var(--white);
+    overflow: hidden;
+    transition: border-color 180ms ease;
+  }
+
+  .faq-item[open] {
+    border-color: var(--marigold);
+  }
+
+  .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.4rem;
+    font-weight: 800;
+    font-size: 1.04rem;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: color 160ms ease;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::marker {
+    display: none;
+    content: "";
+  }
+
+  .faq-item[open] summary {
+    color: var(--bayou);
+  }
+
+  .plus-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(16, 33, 31, 0.2);
+    border-radius: 50%;
+    position: relative;
+    transition: border-color 160ms ease, transform 160ms ease;
+  }
+
+  .plus-icon::before,
+  .plus-icon::after {
+    content: "";
+    position: absolute;
+    background: rgba(16, 33, 31, 0.5);
+    transition: background 160ms ease, transform 160ms ease;
+  }
+
+  .plus-icon::before {
+    top: 50%;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .plus-icon::after {
+    top: 4px;
+    bottom: 4px;
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+  }
+
+  .faq-item[open] .plus-icon {
+    border-color: var(--marigold);
+  }
+
+  .faq-item[open] .plus-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    background: var(--marigold);
+  }
+
+  .faq-item[open] .plus-icon::before {
+    background: var(--marigold);
+  }
+
+  .faq-answer {
+    padding: 0 1.4rem 1.2rem;
+  }
+
+  .faq-answer p {
+    color: rgba(16, 33, 31, 0.68);
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 860px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .schedule-placeholder {
+      text-align: left;
+    }
+
+    .schedule-placeholder h2,
+    .schedule-placeholder .lead {
+      margin: 0;
+    }
+
+    .schedule-placeholder .button-row {
+      justify-content: flex-start;
+    }
+  }
+</style>

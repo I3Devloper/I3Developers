@@ -1,0 +1,114 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import Testimonials from "@/components/Testimonials.astro";
+import CTA from "@/components/CTA.astro";
+import { locations } from "@/data/locations";
+import { breadcrumbSchema, serviceSchema } from "@/lib/seo";
+
+export function getStaticPaths() {
+  return locations.map((loc) => ({
+    params: { slug: loc.slug },
+    props: { locationData: loc }
+  }));
+}
+
+const { locationData } = Astro.props;
+---
+
+<BaseLayout
+  title={locationData.metaTitle}
+  description={locationData.description}
+  canonical={`/locations/${locationData.slug}/`}
+  schema={[
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Locations Served", url: "#" },
+      { name: locationData.city, url: `/locations/${locationData.slug}/` }
+    ])
+  ]}
+>
+  <Hero
+    eyebrow={locationData.eyebrow}
+    title={locationData.title}
+    lead={locationData.hero}
+    primary={{ label: "Request a local quote", href: "/contact/" }}
+    secondary={{ label: "Our Lafayette office", href: "/contact/" }}
+  />
+
+  <section class="section">
+    <div class="container location-layout">
+      <article class="card location-body">
+        <p class="eyebrow">Local Market Focus</p>
+        <h2>Growing your business in {locationData.city}, LA.</h2>
+        <div class="rich-text">
+          <p>{locationData.intro}</p>
+          <p>
+            Having a localized search strategy is essential. We help local businesses in {locationData.city} connect with customers who are searching on Google right now. By prioritizing load speeds, clean headings, schema metadata, and responsive interfaces, we construct a powerful digital channel that brings in leads.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container grid two">
+      <article class="card list-card">
+        <p class="eyebrow">What we deliver</p>
+        <h2>Clear outcomes for {locationData.city}.</h2>
+        <ul>
+          {locationData.outcomes.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="card list-card">
+        <p class="eyebrow">How we execute</p>
+        <h2>Practical process.</h2>
+        <ol>
+          {locationData.process.map((item) => <li>{item}</li>)}
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .location-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .location-body,
+  .list-card {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .list-card ul,
+  .list-card ol {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .list-card li {
+    color: rgba(16, 33, 31, 0.78);
+    font-size: 1.05rem;
+  }
+
+  .alt {
+    background: rgba(49, 95, 83, 0.07);
+  }
+
+  @media (max-width: 860px) {
+    .location-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

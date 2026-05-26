@@ -1,0 +1,40 @@
+# Dependencies  
+  
+node_modules/  
+  
+# Build output  
+dist/  
+  
+# Astro  
+.astro/  
+  
+# IDE/tool dirs  
+.antigravitycli/  
+.commandcode/  
+  
+# Scraped data  
+currentWebsite_data/  
+  
+# Misc local images  
+Images/  
+  
+# Env  
+.env  
+.env.local  
+.env.*.local  
+  
+# Vercel  
+.vercel/  
+  
+# OS files  
+Thumbs.db  
+Desktop.ini  
+  
+# IDE  
+*.swp  
+.DS_Store  
+
+AGENTS.md
+GBP-OPTIMIZATION-GUIDE.md
+implementation_plan.md
+walkthrough.md

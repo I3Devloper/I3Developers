@@ -1,0 +1,156 @@
+---
+import { caseStudies, proofStats, reviewSources } from "@/data/proof";
+---
+
+<section class="section proof">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Proof beats promises</p>
+        <h2>Local trust signals built into the site, not sprinkled on later.</h2>
+      </div>
+      <p class="lead">
+        We make room for Google reviews, Yelp reviews, testimonials, case studies, before/after examples, and measurable results while staying inside platform and structured-data rules.
+      </p>
+    </div>
+
+    <div class="stats">
+      {proofStats.map((stat) => (
+        <div>
+          <strong>{stat.value}</strong>
+          <span>{stat.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid three proof-grid">
+      {caseStudies.map((study) => (
+        <article class="card proof-card">
+          <p class="eyebrow">{study.category}</p>
+          <h3>{study.title}</h3>
+          <p>{study.summary}</p>
+          <ul>
+            {study.metrics.map((metric) => <li>{metric}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <div class="review-grid">
+      {reviewSources.map((source) => (
+        <article>
+          <h3>{source.name}</h3>
+          <p>{source.note}</p>
+          <a href={source.href}>{source.cta}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof {
+    background: linear-gradient(180deg, transparent, rgba(49, 95, 83, 0.08));
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .stats div {
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .stats strong,
+  .stats span {
+    display: block;
+  }
+
+  .stats strong {
+    color: var(--marigold);
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4vw, 4.4rem);
+    line-height: 1;
+  }
+
+  .stats span {
+    color: rgba(255, 250, 240, 0.72);
+    font-weight: 800;
+  }
+
+  .proof-card {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .proof-card .eyebrow {
+    margin: 0;
+  }
+
+  .proof-card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .proof-card li {
+    padding: 0.45rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(231, 168, 59, 0.2);
+    color: var(--cypress);
+    font-size: 0.86rem;
+    font-weight: 800;
+  }
+
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--ink);
+    border-radius: 28px;
+    background: var(--ink);
+  }
+
+  .review-grid article {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.2rem;
+    background: var(--paper);
+  }
+
+  .review-grid h3 {
+    font-size: 1.6rem;
+  }
+
+  .review-grid p {
+    color: rgba(16, 33, 31, 0.74);
+  }
+
+  .review-grid a {
+    color: var(--crawfish);
+    font-weight: 900;
+    text-decoration-color: var(--marigold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 5px;
+  }
+
+  @media (max-width: 860px) {
+    .stats,
+    .review-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

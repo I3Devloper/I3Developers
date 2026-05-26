@@ -1,0 +1,252 @@
+---
+import { testimonials } from "@/data/testimonials";
+import { site } from "@/data/site";
+---
+
+<section class="testimonials-section">
+  <div class="container">
+    <div class="testimonials-header">
+      <div>
+        <p class="eyebrow">Client Success</p>
+        <h2>What Lafayette businesses say about i3Developers.</h2>
+      </div>
+      <div class="google-badge-card">
+        <div class="google-logo">
+          <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.6 15.02 1 12 1 7.37 1 3.4 3.66 1.48 7.54l3.89 3c.96-2.88 3.66-5.5 6.63-5.5z"/>
+            <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.29 1.48-1.14 2.73-2.42 3.57l3.77 2.92c2.2-2.03 3.68-5.02 3.68-8.64z"/>
+            <path fill="#FBBC05" d="M5.37 14.54c-.24-.72-.37-1.5-.37-2.3a7.8 7.8 0 01.37-2.3L1.48 7.54C.54 9.43 0 11.59 0 13.88s.54 4.45 1.48 6.34l3.89-3z"/>
+            <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.92l-3.77-2.92c-1.04.7-2.38 1.12-4.19 1.12-2.97 0-5.67-2.62-6.63-5.5l-3.89 3C3.4 20.34 7.37 23 12 23z"/>
+          </svg>
+          <span class="badge-title">Google Rating</span>
+        </div>
+        <div class="badge-rating">
+          <strong>5.0</strong>
+          <span class="stars">★★★★★</span>
+          <small>Based on Google Reviews</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials-grid">
+      {testimonials.map((t) => (
+        <article class="card testimonial-card">
+          <div class="card-header">
+            <span class="stars-rating">★★★★★</span>
+            <span class="source-tag">{t.source}</span>
+          </div>
+          <blockquote class="quote-text">
+            “{t.quote}”
+          </blockquote>
+          <div class="author-info">
+            <div class="author-meta">
+              <strong>{t.author}</strong>
+              <small>{t.title}</small>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="testimonials-cta">
+      <p>Happy with our partnership?</p>
+      <a href={site.googleMapsUrl} target="_blank" rel="noopener noreferrer" class="button google-review-btn">
+        <svg viewBox="0 0 24 24" width="18" height="18">
+          <path fill="currentColor" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
+        </svg>
+        Review us on Google
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    padding: clamp(4rem, 8vw, 7.5rem) 0;
+    background: linear-gradient(180deg, var(--white) 0%, rgba(246, 239, 227, 0.45) 100%);
+  }
+
+  .testimonials-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .testimonials-header h2 {
+    max-width: 620px;
+    margin-top: 0.6rem;
+  }
+
+  .google-badge-card {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 1.4rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(16, 33, 31, 0.04);
+  }
+
+  .google-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.28rem;
+  }
+
+  .badge-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(16, 33, 31, 0.6);
+  }
+
+  .badge-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+    border-left: 1px solid var(--line);
+    padding-left: 1.2rem;
+  }
+
+  .badge-rating strong {
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .badge-rating .stars {
+    color: var(--marigold);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-rating small {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(16, 33, 31, 0.5);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2.6rem);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 12px 34px rgba(16, 33, 31, 0.02);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(16, 33, 31, 0.05);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stars-rating {
+    color: var(--marigold);
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+  }
+
+  .source-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cypress);
+    background: rgba(49, 95, 83, 0.08);
+    padding: 0.28rem 0.6rem;
+    border-radius: 99px;
+  }
+
+  .quote-text {
+    font-family: var(--font-serif, 'Fraunces', serif);
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .author-info {
+    border-top: 1px solid var(--line);
+    padding-top: 1.1rem;
+  }
+
+  .author-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+  }
+
+  .author-meta strong {
+    font-size: 0.94rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  .author-meta small {
+    font-size: 0.82rem;
+    color: rgba(16, 33, 31, 0.62);
+    font-weight: 700;
+  }
+
+  .testimonials-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    text-align: center;
+  }
+
+  .testimonials-cta p {
+    font-weight: 800;
+    color: rgba(16, 33, 31, 0.68);
+  }
+
+  .google-review-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--white);
+    box-shadow: 0 12px 28px rgba(16, 33, 31, 0.16);
+  }
+
+  .google-review-btn:hover {
+    background: var(--bayou);
+  }
+
+  @media (max-width: 860px) {
+    .testimonials-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

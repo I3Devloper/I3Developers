@@ -1,0 +1,22 @@
+{
+  "name": "i3Developers",
+  "short_name": "i3Dev",
+  "description": "Lafayette web design, website development, SEO, and digital marketing agency.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10211f",
+  "theme_color": "#10211f",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

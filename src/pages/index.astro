@@ -1,0 +1,146 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import ServiceCard from "@/components/ServiceCard.astro";
+import ProofSection from "@/components/ProofSection.astro";
+import Testimonials from "@/components/Testimonials.astro";
+import CTA from "@/components/CTA.astro";
+import { services } from "@/data/services";
+import { site } from "@/data/site";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "Lafayette Website Design & SEO Services | i3Developers";
+const description =
+  "Top Lafayette website design, development, and SEO agency. i3Developers constructs custom digital solutions that rank on Google, convert leads, and grow local businesses.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }])]}
+>
+  <Hero
+    eyebrow="Lafayette web design & SEO"
+    title="Lafayette Web Design & SEO Services Built to Perform."
+    lead="i3Developers creates fast, polished websites with stronger local SEO, clear service paths, verified proof, and a smoother path from first visit to first lead."
+    primary={{ label: "Explore services", href: "/services/" }}
+    secondary={{ label: `Call ${site.phone}`, href: site.phoneHref }}
+  />
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Built with intention</p>
+        <h2>Sharp strategy. Clean execution. No generic agency fog.</h2>
+      </div>
+      <div class="rich-text">
+        <p>
+          The best business websites feel effortless to use, but they are carefully planned underneath: clear service paths, useful content, local proof, fast performance, and calls to action that feel natural.
+        </p>
+        <p>
+          We design every page around what a real Lafayette buyer needs to know before they call, request pricing, or compare options.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services-band">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Core services</p>
+          <h2>One local growth system, eight useful parts.</h2>
+        </div>
+        <p class="lead">
+          Each service page is written for clearer search intent, stronger trust, and better internal linking.
+        </p>
+      </div>
+      <div class="grid three">
+        {services.map((service, index) => <ServiceCard service={service} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <ProofSection />
+
+  <Testimonials />
+
+  <section class="section">
+    <div class="container local-grid">
+      <article class="local-main card">
+        <p class="eyebrow">Local SEO stack</p>
+        <h2>Designed for Lafayette search behavior.</h2>
+        <p class="lead">
+          Ranking locally is not one trick. It is page relevance, business profile alignment, reviews, citations, content quality, internal links, performance, and proof all agreeing with each other.
+        </p>
+      </article>
+      {[
+        "Clear service pages for high-intent Lafayette searches",
+        "Helpful FAQs, proof blocks, and local business context",
+        "Clean indexing paths and search-friendly site architecture",
+        "Case studies, review links, and testimonial-ready sections",
+        "Industry and service-area pages without keyword cannibalization",
+        "Search Console and analytics launch checklist"
+      ].map((item) => <div class="local-item">{item}</div>)}
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.85fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .services-band {
+    background:
+      linear-gradient(180deg, rgba(255, 250, 240, 0.42), rgba(231, 168, 59, 0.1)),
+      linear-gradient(90deg, transparent, rgba(49, 95, 83, 0.08));
+  }
+
+  .local-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 0.65fr));
+    gap: 1rem;
+  }
+
+  .local-main {
+    grid-row: span 3;
+    display: grid;
+    gap: 1.2rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: var(--ink);
+  }
+
+  .local-main h2,
+  .local-main .eyebrow {
+    color: var(--white);
+  }
+
+  .local-main .lead {
+    color: rgba(255, 250, 240, 0.72);
+  }
+
+  .local-item {
+    min-height: 150px;
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(255, 250, 240, 0.72);
+    color: var(--cypress);
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
+  @media (max-width: 900px) {
+    .split,
+    .local-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

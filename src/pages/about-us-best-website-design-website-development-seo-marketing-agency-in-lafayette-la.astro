@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { site } from "@/data/site";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "About Us - i3Developers - Lafayette Web Design, Development, SEO & Marketing Agency";
+const description =
+  "In Lafayette, i3Developers delivers expert web design, branding and printing, SEO and social media marketing. Learn more about our tailored digital solutions.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/about-us-best-website-design-website-development-seo-marketing-agency-in-lafayette-la/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "About", url: "/about-us-best-website-design-website-development-seo-marketing-agency-in-lafayette-la/" }])]}
+>
+  <Hero
+    eyebrow={`Serving ${site.area} since ${site.foundingYear}`}
+    title="A local digital team with builder instincts."
+    lead="i3Developers helps Lafayette businesses turn websites, search, software, and marketing into practical growth systems."
+    primary={{ label: "View services", href: "/services/" }}
+    secondary={{ label: "Talk to the team", href: "/contact/" }}
+  />
+
+  <section class="section">
+    <div class="container grid two">
+      <article class="card about-card">
+        <p class="eyebrow">About i3Developers</p>
+        <h2>We build with the boring parts handled.</h2>
+        <div class="rich-text">
+          <p>
+            The work is creative, but the foundation is practical: fast pages, clear services, local SEO structure, proof, analytics, and a launch plan that protects existing search equity.
+          </p>
+          <p>
+            Since 2004, the mission has stayed simple: help businesses use better technology and clearer communication to win more of the right customers.
+          </p>
+        </div>
+      </article>
+      <article class="card about-card accent">
+        <p class="eyebrow">How we think</p>
+        <h2>Design is not decoration. It is direction.</h2>
+        <div class="rich-text">
+          <p>
+            Every section should answer a buyer question. Every page should have a job. Every technical choice should make the site easier to crawl, faster to load, and simpler to maintain.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .about-card {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.4rem, 4vw, 3rem);
+  }
+
+  .about-card.accent {
+    background: var(--ink);
+  }
+
+  .about-card.accent h2,
+  .about-card.accent .eyebrow {
+    color: var(--white);
+  }
+
+  .about-card.accent .rich-text {
+    color: rgba(255, 250, 240, 0.74);
+  }
+</style>

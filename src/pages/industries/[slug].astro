@@ -1,0 +1,204 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { industries } from "@/data/industries";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo";
+
+export function getStaticPaths() {
+  return industries.map((industry) => ({
+    params: { slug: industry.slug },
+    props: { industry }
+  }));
+}
+
+const { industry } = Astro.props;
+---
+
+<BaseLayout
+  title={industry.metaTitle}
+  description={industry.description}
+  canonical={`/industries/${industry.slug}/`}
+  schema={[
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Industries", url: "/industries/" },
+      { name: industry.title, url: `/industries/${industry.slug}/` }
+    ]),
+    faqSchema(industry.faqs)
+  ]}
+>
+  <Hero
+    eyebrow={industry.eyebrow}
+    title={industry.title}
+    lead={industry.hero}
+    primary={{ label: "Build this for my business", href: "/contact/" }}
+    secondary={{ label: "View all services", href: "/services/" }}
+  />
+
+  <section class="section">
+    <div class="container industry-layout">
+      <article class="card industry-body">
+        <p class="eyebrow">Industry overview</p>
+        <h2>Specialized web design and SEO for {industry.title.replace(/ in .+/, "")}.</h2>
+        <div class="rich-text">
+          <p>{industry.intro}</p>
+          <p>
+            We build industry-specific websites that speak directly to your buyers, address their unique concerns, and convert visitors into qualified leads. Every page is designed around what matters most to your audience.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container grid two">
+      <article class="card list-card">
+        <p class="eyebrow">What we deliver</p>
+        <h2>Clear outcomes.</h2>
+        <ul>
+          {industry.outcomes.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="card list-card">
+        <p class="eyebrow">How it works</p>
+        <h2>Practical process.</h2>
+        <ol>
+          {industry.process.map((item) => <li>{item}</li>)}
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions {industry.title.replace(/ in .+/, "")} buyers ask.</h2>
+      </div>
+      <div class="faq-list">
+        {industry.faqs.map((faq) => (
+          <details class="card">
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container industry-cta-card">
+      <p class="eyebrow">Ready to start?</p>
+      <h2>Your industry deserves a website that understands it.</h2>
+      <p class="lead">
+        Tell us about your business and we will show you exactly how a specialized website and SEO strategy can help you win more customers in Lafayette and across Acadiana.
+      </p>
+      <div class="button-row">
+        <a class="button" href="/contact/">Request a consultation</a>
+        <a class="button secondary" href="/services/">Explore all services</a>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .industry-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .industry-body {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .list-card {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .list-card ul,
+  .list-card ol {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .list-card li {
+    color: rgba(16, 33, 31, 0.78);
+    font-size: 1.05rem;
+  }
+
+  .alt {
+    background: rgba(49, 95, 83, 0.07);
+  }
+
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(300px, 1fr);
+    gap: 2rem;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  details {
+    padding: 1rem 1.1rem;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 900;
+  }
+
+  details p {
+    margin-top: 0.8rem;
+    color: rgba(16, 33, 31, 0.72);
+  }
+
+  .industry-cta-card {
+    display: grid;
+    gap: 1.3rem;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: 34px;
+    background: var(--ink);
+    text-align: center;
+  }
+
+  .industry-cta-card h2,
+  .industry-cta-card .eyebrow {
+    color: var(--white);
+  }
+
+  .industry-cta-card .lead {
+    color: rgba(255, 250, 240, 0.72);
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .industry-cta-card .button {
+    color: var(--ink);
+    background: var(--marigold);
+  }
+
+  .industry-cta-card .button.secondary {
+    color: var(--white);
+    border-color: var(--white);
+  }
+
+  @media (max-width: 860px) {
+    .faq-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

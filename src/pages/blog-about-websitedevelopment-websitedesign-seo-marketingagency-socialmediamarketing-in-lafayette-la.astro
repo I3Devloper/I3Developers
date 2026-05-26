@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "Blog Archive - i3Developers";
+const description =
+  "Legacy blog archive page. Visit our current blog for the latest insights on Lafayette web design, SEO, and digital marketing.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/blog/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Blog", url: "/blog/" }])]}
+>
+  <div style="padding:4rem 2rem;text-align:center;font-family:system-ui;">
+    <h1>Blog Archive</h1>
+    <p>This page has moved. <a href="/blog/">View our current blog &rarr;</a></p>
+  </div>
+</BaseLayout>

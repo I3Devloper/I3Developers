@@ -1,0 +1,141 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { services } from "@/data/services";
+import { site } from "@/data/site";
+---
+
+<BaseLayout
+  title="Page Not Found | i3Developers"
+  description="The page you are looking for does not exist. Explore our Lafayette web design and SEO services to get back on track."
+  canonical="/404/"
+>
+  <section class="section error-hero">
+    <div class="container centered">
+      <div class="badge animate-in">404 Error</div>
+      <h1 class="animate-in" style="animation-delay: 80ms">Lost in the bayou?</h1>
+      <p class="lead animate-in" style="animation-delay: 160ms">
+        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+      </p>
+      
+      <div class="button-row justify-center animate-in" style="animation-delay: 240ms">
+        <a class="button" href="/">Back to home</a>
+        <a class="button secondary" href="/contact/">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section popular-links alt">
+    <div class="container">
+      <div class="section-header centered">
+        <p class="eyebrow">Find your way</p>
+        <h2>Popular services and paths</h2>
+      </div>
+      
+      <div class="grid three">
+        {services.slice(0, 3).map((service) => (
+          <a href={`/services/${service.slug}/`} class="card link-card">
+            <h3>{service.shortTitle}</h3>
+            <p>{service.eyebrow}</p>
+            <span class="arrow">Explore ➔</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-hero {
+    padding: clamp(6rem, 10vw, 10rem) 0 clamp(4rem, 8vw, 6rem);
+    background:
+      radial-gradient(circle at 50% 30%, rgba(132, 176, 38, 0.15), transparent 30rem),
+      radial-gradient(circle at 10% 80%, rgba(77, 125, 146, 0.1), transparent 24rem);
+  }
+
+  .centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .badge {
+    display: inline-flex;
+    padding: 0.58rem 1rem;
+    border: 1px solid var(--marigold);
+    border-radius: 999px;
+    color: var(--marigold);
+    font-weight: 800;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-hero h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+  }
+
+  .error-hero .lead {
+    color: rgba(16, 33, 31, 0.72);
+    margin-bottom: 2rem;
+  }
+
+  .justify-center {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .popular-links {
+    padding: 5rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .alt {
+    background: rgba(77, 125, 146, 0.05);
+  }
+
+  .link-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding: 2.2rem;
+    text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .link-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--marigold);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+  }
+
+  .link-card h3 {
+    font-size: 1.6rem;
+    color: var(--ink);
+  }
+
+  .link-card p {
+    color: rgba(16, 33, 31, 0.68);
+    font-size: 0.95rem;
+  }
+
+  .arrow {
+    font-weight: 800;
+    color: var(--marigold);
+    font-size: 0.92rem;
+    transition: transform 180ms ease;
+  }
+
+  .link-card:hover .arrow {
+    transform: translateX(4px);
+  }
+</style>

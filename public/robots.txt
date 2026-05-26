@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /drafts/
+Disallow: /preview/
+
+Sitemap: https://i3developers.com/sitemap-index.xml

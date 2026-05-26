@@ -1,0 +1,205 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { comboPages } from "@/data/combos";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo";
+
+export function getStaticPaths() {
+  return comboPages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page }
+  }));
+}
+
+const { page } = Astro.props;
+---
+
+<BaseLayout
+  title={page.metaTitle}
+  description={page.description}
+  canonical={`/services/local/${page.slug}/`}
+  schema={[
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Services", url: "/services/" },
+      { name: page.serviceShortTitle, url: `/services/${page.serviceSlug}/` },
+      { name: `${page.serviceShortTitle} in ${page.city}`, url: `/services/local/${page.slug}/` }
+    ]),
+    faqSchema(page.faqs)
+  ]}
+>
+  <Hero
+    eyebrow={page.eyebrow}
+    title={page.hero}
+    lead={page.intro}
+    primary={{ label: "Get started", href: "/contact/" }}
+    secondary={{ label: `View ${page.serviceShortTitle} service`, href: `/services/${page.serviceSlug}/` }}
+  />
+
+  <section class="section">
+    <div class="container combo-layout">
+      <article class="card combo-body">
+        <p class="eyebrow">Local service overview</p>
+        <h2>{page.serviceShortTitle} for {page.city} businesses that want real results.</h2>
+        <div class="rich-text">
+          <p>{page.intro}</p>
+          <p>
+            We serve {page.city} businesses with the same attention to detail, local market knowledge, and conversion-focused design that we bring to every project in Acadiana. Your business deserves a digital presence that reflects its quality.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container grid two">
+      <article class="card list-card">
+        <p class="eyebrow">What we deliver</p>
+        <h2>Clear outcomes.</h2>
+        <ul>
+          {page.outcomes.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="card list-card">
+        <p class="eyebrow">How it works</p>
+        <h2>Practical process.</h2>
+        <ol>
+          {page.process.map((item) => <li>{item}</li>)}
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions {page.city} buyers ask about {page.serviceShortTitle.toLowerCase()}.</h2>
+      </div>
+      <div class="faq-list">
+        {page.faqs.map((faq) => (
+          <details class="card">
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container combo-cta-card">
+      <p class="eyebrow">Serving {page.city}</p>
+      <h2>Ready to grow your {page.city} business?</h2>
+      <p class="lead">
+        We help {page.city} businesses with {page.serviceShortTitle.toLowerCase()} that drives real results. Tell us about your business and we will show you the plan.
+      </p>
+      <div class="button-row">
+        <a class="button" href="/contact/">Request a consultation</a>
+        <a class="button secondary" href={`/services/${page.serviceSlug}/`}>Learn about {page.serviceShortTitle}</a>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .combo-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .combo-body {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .list-card {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .list-card ul,
+  .list-card ol {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .list-card li {
+    color: rgba(16, 33, 31, 0.78);
+    font-size: 1.05rem;
+  }
+
+  .alt {
+    background: rgba(49, 95, 83, 0.07);
+  }
+
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(300px, 1fr);
+    gap: 2rem;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  details {
+    padding: 1rem 1.1rem;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 900;
+  }
+
+  details p {
+    margin-top: 0.8rem;
+    color: rgba(16, 33, 31, 0.72);
+  }
+
+  .combo-cta-card {
+    display: grid;
+    gap: 1.3rem;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: 34px;
+    background: var(--ink);
+    text-align: center;
+  }
+
+  .combo-cta-card h2,
+  .combo-cta-card .eyebrow {
+    color: var(--white);
+  }
+
+  .combo-cta-card .lead {
+    color: rgba(255, 250, 240, 0.72);
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .combo-cta-card .button {
+    color: var(--ink);
+    background: var(--marigold);
+  }
+
+  .combo-cta-card .button.secondary {
+    color: var(--white);
+    border-color: var(--white);
+  }
+
+  @media (max-width: 860px) {
+    .faq-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

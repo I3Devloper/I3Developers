@@ -1,0 +1,81 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { getCollection } from "astro:content";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const posts = await getCollection("blog");
+const sortedPosts = posts.sort(
+  (a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime()
+);
+
+const title = "Blog - i3Developers - Lafayette Web Design, Development, SEO & Marketing Agency";
+const description =
+  "Insights on Lafayette website design, SEO, digital marketing, app development, ecommerce, branding, and local business growth.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/blog/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Blog", url: "/blog/" }])]}
+>
+  <Hero
+    eyebrow="Blog"
+    title="Local digital strategy without the fluff fog."
+    lead="Helpful Lafayette-focused articles that support service pages, answer buyer questions, and give local businesses a reason to trust the team behind the work."
+    primary={{ label: "Read the strategy", href: "#posts" }}
+    secondary={{ label: "Request SEO help", href: "/contact/" }}
+  />
+
+  <section class="section" id="posts">
+    <div class="container post-grid">
+      {sortedPosts.map((post) => (
+        <article class="card post-card">
+          <p class="eyebrow">{post.data.tag}</p>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.excerpt}</p>
+          <a href={`/blog/${post.id.replace(/\.md$/, "")}/`}>Read the article &rarr;</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .post-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .post-card {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.4rem, 4vw, 3rem);
+  }
+
+  .post-card h2 {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+  }
+
+  .post-card p:not(.eyebrow) {
+    max-width: 760px;
+    color: rgba(16, 33, 31, 0.74);
+  }
+
+  .post-card a {
+    width: fit-content;
+    color: var(--cypress);
+    font-weight: 900;
+    text-decoration-color: var(--marigold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 5px;
+  }
+
+  .post-card a:hover {
+    color: var(--marigold);
+  }
+</style>

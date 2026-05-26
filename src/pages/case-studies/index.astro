@@ -1,0 +1,108 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { caseStudies } from "@/data/proof";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "Case Studies | Lafayette Web Design, SEO & Digital Marketing Proof";
+const description =
+  "Explore i3Developers case-study frameworks for Lafayette web design, SEO, ecommerce, and digital growth projects.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/case-studies/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Case Studies", url: "/case-studies/" }])]}
+>
+  <Hero
+    eyebrow="Case studies"
+    title="Proof pages that make ranking claims believable."
+    lead="This section is ready for real Lafayette and Acadiana client stories: challenge, solution, screenshots, metrics, testimonials, and next-step CTAs."
+    primary={{ label: "Plan a case study", href: "/contact/" }}
+    secondary={{ label: "View services", href: "/services/" }}
+  />
+
+  <section class="section">
+    <div class="container case-grid">
+      {caseStudies.map((study) => (
+        <article class="card case-card">
+          <p class="eyebrow">{study.category}</p>
+          <h2>{study.title}</h2>
+          <p>{study.summary}</p>
+          <ul>
+            {study.metrics.map((metric) => <li>{metric}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section proof-plan">
+    <div class="container proof-plan-card">
+      <p class="eyebrow">What to collect next</p>
+      <h2>Real results turn this from a beautiful site into a local authority asset.</h2>
+      <div class="grid three">
+        <p>Before and after screenshots of redesigns, ranking improvements, conversion paths, and page-speed gains.</p>
+        <p>Client-approved testimonials with names, roles, company names, and service context.</p>
+        <p>Google and Yelp review embeds or excerpts with proper attribution, plus direct client testimonials where approved.</p>
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .case-card {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .case-card h2 {
+    font-size: clamp(2rem, 3.2vw, 3.4rem);
+  }
+
+  .case-card p:not(.eyebrow) {
+    color: rgba(16, 33, 31, 0.74);
+  }
+
+  .case-card ul {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--cypress);
+    font-weight: 800;
+  }
+
+  .proof-plan {
+    background: rgba(49, 95, 83, 0.08);
+  }
+
+  .proof-plan-card {
+    display: grid;
+    gap: 1.3rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: 34px;
+    background: var(--white);
+  }
+
+  .proof-plan-card p:not(.eyebrow) {
+    color: rgba(16, 33, 31, 0.75);
+  }
+
+  @media (max-width: 900px) {
+    .case-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

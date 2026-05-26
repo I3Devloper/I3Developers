@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import { site } from "@/data/site";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "Contact i3Developers | Lafayette Web Design & SEO Consultation";
+const description =
+  "Contact i3Developers in Lafayette, LA for web design, SEO, app development, ecommerce, branding, and digital marketing consultation.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/contact/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Contact", url: "/contact/" }])]}
+>
+  <Hero
+    eyebrow="Contact"
+    title="Tell us what the website needs to do next."
+    lead="Call i3Developers or send the project basics. The first goal is simple: understand the business, the search opportunity, and what a better website should produce."
+    primary={{ label: `Call ${site.phone}`, href: site.phoneHref }}
+    secondary={{ label: "View services", href: "/services/" }}
+  />
+
+  <section class="section">
+    <div class="container contact-grid">
+      <article class="card contact-card">
+        <p class="eyebrow">Project starter</p>
+        <h2>Useful details to bring.</h2>
+        <ul>
+          <li>Current website URL and the pages that matter most</li>
+          <li>Top services you want to rank for in Lafayette</li>
+          <li>Business profile access and review links</li>
+          <li>Examples of past work, testimonials, and before/after proof</li>
+          <li>Any important existing pages that should stay easy to find</li>
+        </ul>
+      </article>
+      <aside class="card contact-card dark">
+        <p class="eyebrow">Call today</p>
+        <h2>{site.phone}</h2>
+        <p>
+          Lafayette, LA and Acadiana service area. A secure contact form, CRM handoff, or booking workflow can be connected during deployment.
+        </p>
+        <a class="button" href={site.phoneHref}>Call now</a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.65fr);
+    gap: 1rem;
+  }
+
+  .contact-card {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.4rem, 4vw, 3rem);
+  }
+
+  .contact-card ul {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding-left: 1.2rem;
+    color: rgba(16, 33, 31, 0.78);
+  }
+
+  .contact-card.dark {
+    color: var(--white);
+    background: var(--ink);
+  }
+
+  .contact-card.dark h2,
+  .contact-card.dark .eyebrow {
+    color: var(--white);
+  }
+
+  .contact-card.dark p {
+    color: rgba(255, 250, 240, 0.72);
+  }
+
+  .contact-card.dark .button {
+    width: fit-content;
+    color: var(--ink);
+    background: var(--marigold);
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

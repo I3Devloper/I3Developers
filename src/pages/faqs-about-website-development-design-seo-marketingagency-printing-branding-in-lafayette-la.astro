@@ -1,0 +1,81 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { services } from "@/data/services";
+import { breadcrumbSchema, faqSchema } from "@/lib/seo";
+
+const title = "FAQ’s - i3Developers - Lafayette Web Design, Development, SEO & Marketing Agency";
+const description =
+  "Answers about website development, website design, SEO, online marketing, social media, ecommerce, app development, custom development, branding, and print.";
+const allFaqs = services.flatMap((service) => service.faqs);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/faqs-about-website-development-design-seo-marketingagency-printing-branding-in-lafayette-la/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "FAQ", url: "/faqs-about-website-development-design-seo-marketingagency-printing-branding-in-lafayette-la/" }]), faqSchema(allFaqs)]}
+>
+  <Hero
+    eyebrow="FAQ"
+    title="Straight answers before the proposal."
+    lead="Helpful answers about web design, development, SEO, marketing, ecommerce, apps, branding, and print before a project begins."
+    primary={{ label: "Ask about a project", href: "/contact/" }}
+    secondary={{ label: "Browse services", href: "/services/" }}
+  />
+
+  <section class="section">
+    <div class="container faq-page">
+      {services.map((service) => (
+        <section class="card faq-group">
+          <p class="eyebrow">{service.shortTitle}</p>
+          <h2>{service.title}</h2>
+          <div>
+            {service.faqs.map((faq) => (
+              <details>
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .faq-page {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .faq-group {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .faq-group h2 {
+    font-size: clamp(2rem, 3vw, 3.2rem);
+  }
+
+  details {
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 900;
+  }
+
+  details p {
+    max-width: 800px;
+    margin-top: 0.7rem;
+    color: rgba(16, 33, 31, 0.72);
+  }
+</style>

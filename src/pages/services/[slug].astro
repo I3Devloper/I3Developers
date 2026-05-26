@@ -1,0 +1,160 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import Testimonials from "@/components/Testimonials.astro";
+import CTA from "@/components/CTA.astro";
+import { services } from "@/data/services";
+import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/seo";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<BaseLayout
+  title={service.metaTitle}
+  description={service.description}
+  canonical={`/services/${service.slug}/`}
+  schema={[
+    breadcrumbSchema([
+      { name: "Home", url: "/" },
+      { name: "Services", url: "/services/" },
+      { name: service.shortTitle, url: `/services/${service.slug}/` }
+    ]),
+    serviceSchema(service),
+    faqSchema(service.faqs)
+  ]}
+>
+  <Hero
+    eyebrow={service.eyebrow}
+    title={service.title}
+    lead={service.hero}
+    primary={{ label: "Request a consultation", href: "/contact/" }}
+    secondary={{ label: "View all services", href: "/services/" }}
+  />
+
+  <section class="section">
+    <div class="container service-layout">
+      <article class="card service-body">
+        <p class="eyebrow">Service overview</p>
+        <h2>{service.shortTitle} built for search, trust, and action.</h2>
+        <div class="rich-text">
+          <p>{service.intro}</p>
+          <p>
+            We focus on clean site architecture, fast page load speeds, local relevance signals, and highly-converting layouts to make your business stand out in Lafayette.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container grid two">
+      <article class="card list-card">
+        <p class="eyebrow">What we deliver</p>
+        <h2>Clear outcomes.</h2>
+        <ul>
+          {service.outcomes.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+      <article class="card list-card">
+        <p class="eyebrow">How it works</p>
+        <h2>Practical process.</h2>
+        <ol>
+          {service.process.map((item) => <li>{item}</li>)}
+        </ol>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <p class="eyebrow">FAQ</p>
+        <h2>Questions buyers ask before they call.</h2>
+      </div>
+      <div class="faq-list">
+        {service.faqs.map((faq) => (
+          <details class="card">
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .service-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .service-body,
+  .list-card {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.3rem, 3vw, 2.4rem);
+  }
+
+  .list-card ul,
+  .list-card ol {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .list-card li {
+    color: rgba(16, 33, 31, 0.78);
+    font-size: 1.05rem;
+  }
+
+  .alt {
+    background: rgba(49, 95, 83, 0.07);
+  }
+
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(300px, 1fr);
+    gap: 2rem;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  details {
+    padding: 1rem 1.1rem;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 900;
+  }
+
+  details p {
+    margin-top: 0.8rem;
+    color: rgba(16, 33, 31, 0.72);
+  }
+
+  @media (max-width: 860px) {
+    .service-layout,
+    .faq-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

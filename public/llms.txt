@@ -1,0 +1,41 @@
+# i3Developers
+
+> Lafayette, Louisiana web design, website development, SEO, app development, ecommerce, branding, print, and digital marketing agency.
+
+## Core Pages
+
+- [Home](https://i3developers.com/): Overview of i3Developers' Lafayette web design, SEO, and marketing services.
+- [Services](https://i3developers.com/services/): All digital growth, development, SEO, marketing, ecommerce, app, branding, and print services.
+- [Web Design & Development](https://i3developers.com/services/lafayette-website-development-web-design/): Custom websites built for speed, search visibility, conversion, and local business growth.
+- [SEO Services](https://i3developers.com/services/search-engine-marketing-seo-services-lafayette-la/): Local SEO and search marketing for Lafayette, LA businesses.
+- [Marketing Agency Services](https://i3developers.com/services/best-marketing-agency-services-lafayette/): Campaign strategy, digital marketing, search, content, and conversion support.
+- [Social Media Marketing](https://i3developers.com/services/social-media-marketing-in-lafayette-la/): Social media strategy, content, and campaign execution for local brands.
+- [Ecommerce Development](https://i3developers.com/services/ecommerce-development-lafayette-la/): Ecommerce storefronts and online selling systems.
+- [App Development](https://i3developers.com/services/lafayette-custom-app-development/): iOS, Android, and cross-platform app development.
+- [Custom Software Development](https://i3developers.com/services/lafayette-custom-software-development/): Business software, workflow automation, and custom development.
+- [Branding and Print](https://i3developers.com/services/lafayette-branding-and-print/): Brand identity, logo design, print design, and production-ready creative.
+- [Case Studies](https://i3developers.com/case-studies/): Proof, results, and project stories.
+- [FAQ](https://i3developers.com/faqs-about-website-development-design-seo-marketingagency-printing-branding-in-lafayette-la/): Answers about web design, development, SEO, marketing, ecommerce, apps, branding, and print.
+- [Contact](https://i3developers.com/contact/): Request a consultation.
+
+## Business Details
+
+- Business name: i3Developers
+- Service area: Lafayette, LA and the Acadiana region
+- Phone: 337-781-4383
+- Website: https://i3developers.com/
+- Google Maps: https://www.google.com/maps/place/i3Developers/@30.1791301,-92.0551424,15z/data=!4m6!3m5!1s0x86249e84b2284d77:0x516436b5b3d84ae1!8m2!3d30.1665634!4d-92.0589468!16s%2Fg%2F11_q9nnvz?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D
+- Yelp: https://www.yelp.com/biz/i3-developers-lafayette?osq=i3+developers&override_cta=Get+pricing
+
+## Topics
+
+- Lafayette website design
+- Lafayette SEO services
+- Lafayette marketing agency
+- Local business SEO
+- Website development
+- Ecommerce development
+- Custom app development
+- Branding and print design
+- Social media marketing
+- Conversion-focused web design

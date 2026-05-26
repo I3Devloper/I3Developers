@@ -1,0 +1,84 @@
+---
+import "@/styles/global.css";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { absoluteUrl, organizationSchema, websiteSchema, localBusinessSchema, webPageSchema } from "@/lib/seo";
+import { site } from "@/data/site";
+
+type Props = {
+  title: string;
+  description: string;
+  canonical?: string;
+  schema?: unknown[];
+  ogImage?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+};
+
+const { title, description, canonical = Astro.url.pathname, schema = [], ogImage = site.defaultOgImage, publishedDate, modifiedDate } = Astro.props;
+const canonicalUrl = absoluteUrl(canonical);
+const ogImageUrl = ogImage.startsWith("http") ? ogImage : absoluteUrl(ogImage);
+const jsonLd = [organizationSchema(), websiteSchema(), localBusinessSchema(), webPageSchema(title, description, canonicalUrl, publishedDate, modifiedDate), ...schema];
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content="Astro" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#10211f" />
+    <link rel="preconnect" href="https://i3developers.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Sans:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    {site.googleAnalyticsId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.googleAnalyticsId}`}></script>
+        <script is:inline set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${site.googleAnalyticsId}');
+        `} />
+      </>
+    )}
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="canonical" href={canonicalUrl} />
+    {import.meta.env.DEV && (
+      <script is:inline src="//unpkg.com/react-grab/dist/index.global.js" crossorigin="anonymous"></script>
+    )}
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} - ${title}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {jsonLd.map((item) => <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />)}
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

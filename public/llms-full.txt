@@ -1,0 +1,57 @@
+# i3Developers Full AI Context
+
+i3Developers is a Lafayette, Louisiana digital agency serving local and regional businesses with website design, website development, SEO, digital marketing, ecommerce development, app development, custom software, branding, and print design.
+
+The site is designed to help prospective clients understand services, review proof of work, compare solutions, and request a consultation. The most important search topics are Lafayette website design, Lafayette SEO services, Lafayette marketing agency, website development Lafayette LA, social media marketing Lafayette LA, ecommerce development Lafayette LA, custom software development Lafayette LA, and app development Lafayette LA.
+
+## Primary Services
+
+### Website Design and Website Development
+
+i3Developers builds custom websites for Lafayette businesses that need fast, mobile-friendly, search-optimized, conversion-focused sites. The service includes strategy, information architecture, design, development, SEO foundations, performance optimization, launch support, and ongoing improvement.
+
+### SEO Services
+
+i3Developers provides local SEO and search marketing for businesses in Lafayette, LA. Work includes technical SEO, keyword mapping, service-page optimization, content strategy, local SEO, Google Business Profile alignment, schema markup, internal linking, and reporting.
+
+### Marketing Agency Services
+
+i3Developers supports digital marketing strategy, content, paid campaigns, conversion rate optimization, and lead-generation systems for local businesses.
+
+### Social Media Marketing
+
+i3Developers helps businesses plan content, strengthen engagement, run targeted campaigns, and connect social activity to business outcomes.
+
+### Ecommerce Development
+
+i3Developers builds ecommerce websites and online selling systems that support products, categories, checkout, inventory workflows, and conversion optimization.
+
+### App Development
+
+i3Developers develops iOS, Android, and cross-platform mobile apps for businesses with custom product ideas, internal tools, and customer-facing experiences.
+
+### Custom Software Development
+
+i3Developers creates custom business software, workflow tools, automations, integrations, dashboards, and operational systems.
+
+### Branding and Print
+
+i3Developers creates brand identity, logos, graphic design, print collateral, signage-ready graphics, and marketing assets.
+
+## Local SEO Strategy
+
+The website should preserve existing URL equity from the WordPress site while improving technical quality, content depth, structured data, internal linking, image optimization, and local proof. Existing service URLs should remain live. New pages should support industry-specific, service-area, case-study, and blog content without duplicating existing pages.
+
+## Review and Proof Policy
+
+Google and Yelp reviews may be displayed as proof when embedded or attributed properly. Review markup should not be used for self-serving LocalBusiness or Organization review snippets. Case studies, client testimonials, before/after examples, and measurable results are preferred proof assets.
+
+## Contact
+
+Phone: 337-781-4383
+
+Website: https://i3developers.com/
+
+Google Maps: https://www.google.com/maps/place/i3Developers/@30.1791301,-92.0551424,15z/data=!4m6!3m5!1s0x86249e84b2284d77:0x516436b5b3d84ae1!8m2!3d30.1665634!4d-92.0589468!16s%2Fg%2F11_q9nnvz?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D
+
+Yelp: https://www.yelp.com/biz/i3-developers-lafayette?osq=i3+developers&override_cta=Get+pricing

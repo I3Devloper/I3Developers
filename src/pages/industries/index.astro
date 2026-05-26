@@ -1,0 +1,119 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import CTA from "@/components/CTA.astro";
+import { industries } from "@/data/industries";
+import { breadcrumbSchema } from "@/lib/seo";
+
+const title = "Industries We Serve | Lafayette Web Design & SEO by Industry";
+const description =
+  "Industry-specific web design and SEO services in Lafayette, LA. Specialized websites for restaurants, law firms, contractors, medical practices, and more.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/industries/"
+  schema={[breadcrumbSchema([{ name: "Home", url: "/" }, { name: "Industries", url: "/industries/" }])]}
+>
+  <Hero
+    eyebrow="Industries"
+    title="Specialized websites for Lafayette industries."
+    lead="Every industry has different buyers, different questions, and different decision timelines. We build websites that speak directly to the people who matter most to your business."
+    primary={{ label: "Find your industry", href: "#industries" }}
+    secondary={{ label: "Request a consultation", href: "/contact/" }}
+  />
+
+  <section class="section" id="industries">
+    <div class="container industry-grid">
+      {industries.map((industry) => (
+        <a href={`/industries/${industry.slug}/`} class="card industry-card">
+          <p class="eyebrow">{industry.eyebrow}</p>
+          <h3>{industry.title}</h3>
+          <p>{industry.description}</p>
+          <span class="industry-link">View industry page &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container industries-cta-card">
+      <p class="eyebrow">Do not see your industry?</p>
+      <h2>We build for every Lafayette business.</h2>
+      <p class="lead">
+        These are the industries we serve most often, but our approach works for any local business. Tell us about yours and we will show you the plan.
+      </p>
+      <a class="button" href="/contact/">Tell us about your business</a>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>
+
+<style>
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .industry-card {
+    display: grid;
+    gap: 0.8rem;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    text-decoration: none;
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .industry-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--marigold);
+    box-shadow: 0 18px 52px rgba(16, 33, 31, 0.14);
+  }
+
+  .industry-card h3 {
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  }
+
+  .industry-card p {
+    color: rgba(16, 33, 31, 0.74);
+    font-size: 0.95rem;
+  }
+
+  .industry-link {
+    color: var(--cypress);
+    font-weight: 900;
+    font-size: 0.9rem;
+  }
+
+  .industry-card:hover .industry-link {
+    color: var(--marigold);
+  }
+
+  .industries-cta-card {
+    display: grid;
+    gap: 1.3rem;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border-radius: 34px;
+    background: rgba(49, 95, 83, 0.08);
+    text-align: center;
+  }
+
+  .industries-cta-card .lead {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 900px) {
+    .industry-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .industry-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
