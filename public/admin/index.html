@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager — i3Developers</title>
-  <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
   <style>
     body { margin: 0; background: #10211f; }
   </style>
 </head>
 <body>
+  <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
   <script>
-    CMS.init();
+    CMS.init({ config: { load_config_file: true } });
   </script>
 </body>
 </html>
