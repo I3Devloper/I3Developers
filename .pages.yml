@@ -1,0 +1,40 @@
+content:
+  - name: blog
+    label: Blog Posts
+    path: src/content/blog
+    type: collection
+    fields:
+      - name: title
+        type: text
+        required: true
+      - name: metaTitle
+        type: text
+      - name: description
+        type: textarea
+      - name: tag
+        type: select
+        options:
+          - Web Design
+          - SEO
+          - Marketing
+          - Ecommerce
+          - App Development
+          - Branding
+          - Social Media
+          - Software
+      - name: excerpt
+        type: textarea
+      - name: author
+        type: text
+        default: i3Developers
+      - name: authorRole
+        type: text
+        default: Team
+      - name: publishedDate
+        type: date
+      - name: modifiedDate
+        type: date
+      - name: keywords
+        type: list
+      - name: body
+        type: markdown
