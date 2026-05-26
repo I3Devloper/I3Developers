@@ -12,8 +12,8 @@ const { service, index = 0 } = Astro.props;
 <article class="service-card card animate-in" style={`animation-delay: ${index * 55}ms`}>
   <span>{String(index + 1).padStart(2, "0")}</span>
   <h3>{service.shortTitle}</h3>
-  <p>{service.description}</p>
-  <a href={`/services/${service.slug}/`} aria-label={`Learn more about ${service.title}`}>Explore service</a>
+  <p>{service.eyebrow}</p>
+  <a href={`/services/${service.slug}/`} aria-label={`Learn more about ${service.title}`}>Explore service →</a>
 </article>
 
 <style>

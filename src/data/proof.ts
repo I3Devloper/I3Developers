@@ -34,22 +34,19 @@ export const caseStudies = [
 export const reviewSources = [
   {
     name: "Google reviews",
-    note:
-      "Embed or sync Google reviews with proper attribution. Do not mark up self-serving reviews for LocalBusiness review stars.",
+    note: "Rated 5.0 stars by Lafayette businesses. See what clients say about our web design and SEO work.",
     cta: "Review on Google",
     href: "https://www.google.com/maps/place/i3Developers/@30.1791301,-92.0551424,15z/data=!4m6!3m5!1s0x86249e84b2284d77:0x516436b5b3d84ae1!8m2!3d30.1665634!4d-92.0589468!16s%2Fg%2F11_q9nnvz?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
   },
   {
     name: "Yelp reviews",
-    note:
-      "Use only recommended Yelp reviews, keep wording faithful, attribute reviewer/date, and link back to Yelp.",
+    note: "Find i3Developers on Yelp for verified client reviews across web design, SEO, and digital marketing.",
     cta: "Find us on Yelp",
     href: "https://www.yelp.com/biz/i3-developers-lafayette?osq=i3+developers&override_cta=Get+pricing"
   },
   {
     name: "Client testimonials",
-    note:
-      "Use direct client permission, names/titles where approved, and pair each testimonial with the service or result it supports.",
+    note: "Working with a Lafayette business and want to share your results? We would love to hear from you.",
     cta: "Share your result",
     href: "/contact/"
   }

@@ -17,7 +17,10 @@ export const site = {
   addressRegion: "LA",
   postalCode: "70503",
   googleAnalyticsId: "", // user can add G-XXXXXX or GTM-XXXXXX here
-  defaultOgImage: "/assets/og-image.jpg", // 1200x630px - add this image to public/assets/
+  googlePlaceId: "ChIJd00osp-eJIYRYUqEs7VkNlE", // from Google Maps URL: ...0x86249e84b2284d77:0x516436b5b3d84ae1
+  facebookUrl: "", // e.g. https://www.facebook.com/i3developers
+  instagramUrl: "", // e.g. https://www.instagram.com/i3developers
+  defaultOgImage: "/assets/og-image.svg", // Replace with a 1200x630 JPG at /assets/og-image.jpg for best social sharing
   scheduleLink: "https://calendly.com/maria-webresearch/30min",
   priceRange: "$$",
   googleMapsUrl:
@@ -42,7 +45,11 @@ export const site = {
   ],
   sameAs: [
     "https://www.google.com/maps/place/i3Developers/@30.1791301,-92.0551424,15z/data=!4m6!3m5!1s0x86249e84b2284d77:0x516436b5b3d84ae1!8m2!3d30.1665634!4d-92.0589468!16s%2Fg%2F11_q9nnvz?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D",
-    "https://www.yelp.com/biz/i3-developers-lafayette?osq=i3+developers&override_cta=Get+pricing"
+    "https://www.yelp.com/biz/i3-developers-lafayette?osq=i3+developers&override_cta=Get+pricing",
+    // Add your real Facebook and Instagram URLs below:
+    // "https://www.facebook.com/i3developers",
+    // "https://www.instagram.com/i3developers",
+    // "https://www.linkedin.com/company/i3developers",
   ],
   serviceAreas: [
     "Lafayette, LA",
