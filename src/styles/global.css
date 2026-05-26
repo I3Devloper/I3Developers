@@ -159,7 +159,7 @@ p {
 
 .section-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.75fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.75fr);
   gap: 2rem;
   align-items: end;
   margin-bottom: 2.2rem;
@@ -231,6 +231,12 @@ p {
   .container {
     width: min(100% - 28px, 1180px);
   }
+}
+
+@media (max-width: 480px) {
+  /* Ensure tap targets meet 44px minimum on mobile */
+  .button { min-height: 48px; padding: 0.9rem 1.1rem; font-size: 0.95rem; }
+  h2 { letter-spacing: -0.03em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -27,6 +27,9 @@ import { services } from "@/data/services";
                 <span aria-hidden="true" class="caret">▾</span>
               </a>
               <div class="dropdown-panel" aria-label="Services menu">
+                <button class="submenu-back" aria-label="Back to main menu">
+                  ← Back
+                </button>
                 {services.map((service) => (
                   <a href={`/services/${service.slug}/`}>
                     <strong>{service.shortTitle}</strong>
@@ -47,57 +50,69 @@ import { services } from "@/data/services";
 </header>
 
 <script>
-  // Mobile menu toggle
-  const toggleBtn = document.querySelector('.menu-toggle');
-  const navMenu = document.querySelector('.nav-menu');
-  const body = document.body;
+  const toggleBtn = document.querySelector('.menu-toggle') as HTMLButtonElement;
+  const navMenu   = document.querySelector('.nav-menu') as HTMLElement;
+  const body      = document.body;
+
+  function closeMenu() {
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('is-active');
+    body.classList.remove('no-scroll');
+    // also collapse any open submenu
+    document.querySelectorAll('.nav-dropdown.is-open').forEach(d => {
+      d.classList.remove('is-open');
+      d.querySelector('.nav-link')?.setAttribute('aria-expanded', 'false');
+    });
+  }
 
   if (toggleBtn && navMenu) {
     toggleBtn.addEventListener('click', () => {
       const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
-      toggleBtn.setAttribute('aria-expanded', String(!isOpen));
-      navMenu.classList.toggle('is-active');
-      body.classList.toggle('no-scroll');
+      if (isOpen) { closeMenu(); } else {
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        navMenu.classList.add('is-active');
+        body.classList.add('no-scroll');
+      }
     });
 
-    // Close menu on clicking outside the drawer
     document.addEventListener('click', (e) => {
-      if (
-        navMenu.classList.contains('is-active') &&
-        !navMenu.contains(e.target as Node) &&
-        !toggleBtn.contains(e.target as Node)
-      ) {
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        navMenu.classList.remove('is-active');
-        body.classList.remove('no-scroll');
+      if (navMenu.classList.contains('is-active') &&
+          !navMenu.contains(e.target as Node) &&
+          !toggleBtn.contains(e.target as Node)) {
+        closeMenu();
       }
     });
 
-    // Close menu on hitting Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navMenu.classList.contains('is-active')) {
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        navMenu.classList.remove('is-active');
-        body.classList.remove('no-scroll');
-      }
+      if (e.key === 'Escape') closeMenu();
     });
   }
 
-  // Mobile dropdown click-to-open handling
-  const dropdowns = document.querySelectorAll('.nav-dropdown');
-  dropdowns.forEach(dropdown => {
-    const link = dropdown.querySelector('.nav-link');
-    if (link) {
-      link.addEventListener('click', (e) => {
-        // Toggle on click for mobile (viewport <= 900px)
-        if (window.innerWidth <= 900) {
-          e.preventDefault();
-          dropdown.classList.toggle('is-open');
-          const isExpanded = link.getAttribute('aria-expanded') === 'true';
-          link.setAttribute('aria-expanded', String(!isExpanded));
+  // Services submenu toggle on mobile
+  document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+    const link = dropdown.querySelector('.nav-link') as HTMLElement;
+    const backBtn = dropdown.querySelector('.submenu-back') as HTMLElement;
+
+    link?.addEventListener('click', (e) => {
+      if (window.innerWidth <= 900) {
+        e.preventDefault();
+        const isOpen = dropdown.classList.contains('is-open');
+        // close all first
+        document.querySelectorAll('.nav-dropdown.is-open').forEach(d => {
+          d.classList.remove('is-open');
+          d.querySelector('.nav-link')?.setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          dropdown.classList.add('is-open');
+          link.setAttribute('aria-expanded', 'true');
         }
-      });
-    }
+      }
+    });
+
+    backBtn?.addEventListener('click', () => {
+      dropdown.classList.remove('is-open');
+      link?.setAttribute('aria-expanded', 'false');
+    });
   });
 </script>
 
@@ -279,6 +294,9 @@ import { services } from "@/data/services";
     height: 0.9rem;
   }
 
+  /* back button hidden on desktop */
+  .submenu-back { display: none; }
+
   .nav-dropdown:hover .dropdown-panel,
   .nav-dropdown:focus-within .dropdown-panel {
     opacity: 1;
@@ -368,13 +386,14 @@ import { services } from "@/data/services";
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-      padding: 6rem 2rem 4rem;
+      justify-content: flex-start;
+      gap: 0;
+      padding: 5rem 1.5rem 2rem;
       z-index: 55;
       transform: translateX(100%);
       transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
       margin-left: 0;
+      overflow-y: auto;
     }
 
     .nav-menu.is-active {
@@ -383,14 +402,17 @@ import { services } from "@/data/services";
 
     nav {
       flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
+      align-items: stretch;
+      gap: 0.25rem;
       width: 100%;
     }
 
     .nav-link {
-      font-size: 1.25rem;
-      padding: 0.5rem 0;
+      font-size: 1.1rem;
+      padding: 0.75rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .caret {
@@ -405,7 +427,7 @@ import { services } from "@/data/services";
       width: 100%;
     }
 
-    /* Disable hover-based opening on mobile */
+    /* Disable hover/focus-within opening on mobile — JS only */
     .nav-dropdown:hover .dropdown-panel,
     .nav-dropdown:focus-within .dropdown-panel {
       opacity: 0;
@@ -418,8 +440,8 @@ import { services } from "@/data/services";
       width: 100%;
       grid-template-columns: 1fr;
       box-shadow: none;
-      border: none;
-      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.2);
       padding: 0.5rem;
       border-radius: 16px;
       margin-top: 0.5rem;
@@ -427,16 +449,40 @@ import { services } from "@/data/services";
       opacity: 1;
       pointer-events: auto;
       transform: none;
+      transition: none;
     }
 
-    /* JavaScript will toggle .is-open class */
+    /* is-open overrides everything — must come AFTER the hover/focus-within disable */
     .nav-dropdown.is-open .dropdown-panel {
-      display: grid;
+      display: grid !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: none !important;
     }
 
     .nav-dropdown.is-open .caret {
       transform: rotate(180deg);
     }
+
+    /* Back button — only visible on mobile */
+    .submenu-back {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-bottom: 0.3rem;
+      text-align: left;
+    }
+
+    .submenu-back:hover { background: rgba(255,255,255,0.14); }
 
     .nav-cta, .nav-cta-primary {
       width: 100%;
