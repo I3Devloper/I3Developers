@@ -15,8 +15,8 @@ dist/
 # Scraped data  
 currentWebsite_data/  
   
-# Misc local images  
-Images/  
+# Misc local images (root-level only, not public/images)
+/Images/  
   
 # Env  
 .env  

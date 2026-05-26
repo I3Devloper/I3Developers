@@ -9,39 +9,41 @@ content:
     type: collection
     fields:
       - name: title
-        type: text
+        type: string
         required: true
       - name: metaTitle
-        type: text
+        type: string
       - name: description
-        type: textarea
+        type: text
       - name: tag
         type: select
         options:
-          - Web Design
-          - SEO
-          - Marketing
-          - Ecommerce
-          - App Development
-          - Branding
-          - Social Media
-          - Software
+          values:
+            - Web Design
+            - SEO
+            - Marketing
+            - Ecommerce
+            - App Development
+            - Branding
+            - Social Media
+            - Software
       - name: excerpt
-        type: textarea
+        type: text
       - name: coverImage
         label: Cover Image
         type: image
       - name: author
-        type: text
+        type: string
         default: i3Developers
       - name: authorRole
-        type: text
+        type: string
         default: Team
       - name: publishedDate
         type: date
       - name: modifiedDate
         type: date
       - name: keywords
-        type: list
+        type: string
+        description: "Comma-separated keywords e.g. web design Lafayette, SEO Lafayette"
       - name: body
-        type: markdown
+        type: rich-text
